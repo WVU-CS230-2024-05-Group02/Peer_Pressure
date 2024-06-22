@@ -1,15 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
-import Sidebar from './components/Sidebar.js';
-import HomepageContent from "./components/HomepageContent.js";
+// script.js
 
-function App() {
-  return (
-    <div className="App">
-      <Sidebar />
-      <HomepageContent />
-    </div>
-  );
-}
-
-export default App;
+// event listener for the menu button to toggle the sidebar menu (if implemented???)
+document.querySelector('.menu-button').addEventListener('click', function() {
+  const sidebar = document.querySelector('.sidebar');
+});
