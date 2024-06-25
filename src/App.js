@@ -1,13 +1,14 @@
 import './App.css';
 import Sidebar from './components/Sidebar.js';
 import SidebarButton from "./components/SidebarButton.js";
-//import HomepageContent from "./components/HomepageContent.js";
 import StudentCourse from './pages/StudentCourse.js';
+import LoginPage from "./pages/LoginPage.js";
 
 function App() {
   return (
     <div className="App">
-      <StudentCourse/>
+      <LoginPage />
+      {/*<StudentCourse/>*/}
     </div>
   );
 }

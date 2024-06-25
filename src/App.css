@@ -14,5 +14,9 @@
   border-color: black;
   cursor: pointer;
   border-radius: 20px;
-  padding: 3px;
+}
+
+.login-logo{
+  width: 280px;
+  height: 280px;
 }
