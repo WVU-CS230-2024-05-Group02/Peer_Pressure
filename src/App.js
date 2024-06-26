@@ -1,15 +1,24 @@
+import React from 'react';
 import './App.css';
-import Sidebar from './components/Sidebar.js';
-import SidebarButton from "./components/SidebarButton.js";
-import StudentCourse from './pages/StudentCourse.js';
-import LoginPage from "./pages/LoginPage.js";
+import GenericPage from './GenericPage';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import StudentCourse from './StudentCourse'; // import the StudentCourse component
 
 function App() {
   return (
-    <div className="App">
-      <LoginPage />
-      {/* <StudentCourse/> */}
-    </div>
+    <Router>
+      <div className="App">
+        <GenericPage>
+          <Switch>
+            <Route exact path="/" component={() => <div>Home Page</div>} />
+            <Route path="/evaluations" component={() => <div>Evaluations Page</div>} />
+            <Route path="/grades" component={() => <div>Grades Page</div>} />
+            <Route path="/course" component={StudentCourse} /> {/* example course component */}
+          </Switch>
+        </GenericPage>
+      </div>
+    </Router>
   );
 }
+
 export default App;
