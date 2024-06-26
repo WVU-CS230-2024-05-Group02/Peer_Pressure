@@ -1,3 +1,20 @@
+/*
+  Dark Blue: 	#2c3c64	
+  Mid Blue:	  #516182	
+  Light Blue: #8fbeca	
+  Gray Blue: 	#e5f3f9	
+  Gray: 	    #e6e6e6	
+*/
+
+.background {
+  background-image: url("../public/Background.png");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  opacity: 100%;
+}
+
 .App {
   text-align: center;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
@@ -16,7 +33,20 @@
   border-radius: 20px;
 }
 
-.login-logo{
+.login-logo {
   width: 280px;
   height: 280px;
+}
+
+.login-box {
+  width: 500px;
+  height: 500px;
+  border-color: black 2px;
+  border: 2px solid green;
+}
+
+.email {
+  width: 280px;
+  height: 280px;
+  border-color: black;
 }
