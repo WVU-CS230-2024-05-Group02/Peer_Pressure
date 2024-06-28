@@ -1,12 +1,15 @@
-/*
-  Dark Blue: 	#2c3c64	
-  Mid Blue:	  #516182	
-  Light Blue: #8fbeca	
-  Gray Blue: 	#e5f3f9	
-  Gray: 	    #e6e6e6	
-*/
+:root {
+  --dark-blue: #2c3c64;
+  --mid-blue: #516182;
+  --light-blue: #8fbeca;
+  --gray-blue: #e5f3f9;
+  --gray: #e6e6e6;
+}
 
 .background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-image: url("../public/Background.png");
   background-size: cover;
   background-position: center;
@@ -17,12 +20,12 @@
 
 .App {
   text-align: center;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .sidebar-button {
   width: 200px;
-  background-color: #516182;
+  background-color: var(--mid-blue);
   color: white;
   display: flex;
   flex-direction: column;
@@ -36,17 +39,59 @@
 .login-logo {
   width: 280px;
   height: 280px;
+  margin-bottom: 20px;
 }
 
-.login-box {
-  width: 500px;
-  height: 500px;
-  border-color: black 2px;
-  border: 2px solid green;
+.login-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .email {
-  width: 280px;
-  height: 280px;
-  border-color: black;
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid var(--gray);
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+p {
+  margin: 10px 0;
+}
+
+.textbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
