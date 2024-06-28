@@ -75,10 +75,14 @@ button {
   margin: 10px 0;
   background-color: #007bff;
   color: white;
-  border: none;
+  border: black solid 2px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+}
+
+.spaced {
+  margin-top: 5px;
 }
 
 button:hover {
@@ -94,4 +98,8 @@ p {
   flex-direction: column;
   align-items: center;
   width: 100%;
+}
+
+input::placeholder{
+  font-style: italic;
 }

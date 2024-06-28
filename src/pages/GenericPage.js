@@ -1,8 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
-import Footer from './FooterForGeneric';
+import Navbar from '../components/Navbar.js';
+import Sidebar from '../components/Sidebar.js';
+import Footer from '../components/Footer.js';
 
 // children: represents any nested components or elements that are passed to GenericPage when it is used
 // minHeight: '100vh' =  minimum height of the div to 100% of the viewport height

@@ -4,6 +4,7 @@ import Textbox from "../components/Textbox";
 import Footer from "../components/Footer";
 import '../App.css';
 
+
 function LoginPage() {
   const navigate = useNavigate();
 
@@ -19,11 +20,9 @@ function LoginPage() {
       <div className="login-container">
         <img className="login-logo" src={`${process.env.PUBLIC_URL}/PeerPressureLogo.png`} alt="App logo" />
         <Textbox email={email} onEmailChange={setEmail} password={password} onPasswordChange={setPassword} />
-        <button>Login</button>
-        <p>If you don't already have an account with us, please make one.</p>
-        <button onClick={handleSignUp}>New User</button>
+        <button className="spaced">Login</button>
+        <button className="spaced" onClick={handleSignUp}>Create Account</button>
       </div>
-      {/*<Footer />*/}
     </div>
   );
 }

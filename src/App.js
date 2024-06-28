@@ -4,6 +4,7 @@ import SidebarButton from "./components/SidebarButton.js";
 import StudentCourse from './pages/StudentCourse.js';
 import LoginPage from "./pages/LoginPage.js";
 import SignupPage from "./pages/SignupPage.js";
+import GenericPage from "./pages/GenericPage.js";
 import { BrowserRouter as Router, createBrowserRouter, RouterProvider, Routes, Route, Link } from 'react-router-dom'
 
 function App() {

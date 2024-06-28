@@ -1,14 +1,12 @@
-import React from "react";
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 
-function Textbox(text){
-    return(
-        <form id="login-box">
-                <label for="email">{text.email}</label>
-                <input type="text" id="userEmail" name="email" required />
+const Footer = () => {
+  return (
+    <footer className="footer bg-dark text-white text-center py-3">
+      <p>&copy; 2024 Peer Pressure APP. All rights reserved.</p>
+    </footer>
+  );
+};
 
-                <label for="password">{text.password}</label>
-                <input type="text" id="userPassword" name="password" required />
-        </form>
-    );
-}
-export default Textbox;
+export default Footer;
