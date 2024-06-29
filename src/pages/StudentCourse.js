@@ -1,5 +1,5 @@
 import React from 'react';
-import StudentEvaluation from '../components/StudentEvaluation';
+import StudentEvaluation from '../components/StudentEvaluationBox';
 import StudentCourseTitleBar from '../components/StudentCourseTitleBar';
 import StudentCourseRightInfoBox from '../components/StudentCourseRightInfoBox';
 
