@@ -13,6 +13,9 @@ function StudentCourse(){
     let grayBlue = "#e5f3f9";
     let midBlue = "#516182";
 
+    document.body.style = "background: " + "white";
+
+
     return ( 
 
         <div class="col">
@@ -52,7 +55,7 @@ function StudentCourse(){
             </div>
 
             {/*Group, Students, Grades section*/}
-            <div class="col-lg-4" style={{backgroundColor: midBlue, borderLeft: "1px solid black"}}>
+            <div class="col-lg-4" style={{backgroundColor: midBlue, borderLeft: "1px solid black", height: "calc(100vh - 120px)"}}>
                
                 {/* Course Alerts */}
                 <StudentCourseRightInfoBox leftHeader={"Course Alerts"} infoInside={["January, 1st: Alert Alert Alert"]}/>

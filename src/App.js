@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage.js";
 import SignupPage from "./pages/SignupPage.js";
 import GenericPage from "./pages/GenericPage.js";
 import { BrowserRouter as Router, createBrowserRouter, RouterProvider, Routes, Route, Link } from 'react-router-dom'
+import AnswerEvaluation from './pages/AnswerEvaluation.js';
 
 function App() {
     const router = createBrowserRouter([
