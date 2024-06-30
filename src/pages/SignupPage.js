@@ -19,7 +19,7 @@ const Signup = () => {
     return (
         <div className="background">
             <div className="login-container">
-                <h1>Sign Up Page</h1>
+                <h1>Sign Up</h1>
                 <img className="login-logo" src={`${process.env.PUBLIC_URL}/PeerPressureLogo.png`} alt="App logo" />
                 <form onSubmit={handleSignup}>
                     <input
@@ -38,7 +38,7 @@ const Signup = () => {
                     />
                     <input
                         type="password"
-                        placeholder="Enter confirm password"
+                        placeholder="Confirm password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
