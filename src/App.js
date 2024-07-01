@@ -1,33 +1,43 @@
+// src/App.js
+import React from 'react';
 import './App.css';
-import Sidebar from './components/Sidebar.js';
-import SidebarButton from "./components/SidebarButton.js";
-import StudentCourse from './pages/StudentCourse.js';
-import LoginPage from "./pages/LoginPage.js";
-import SignupPage from "./pages/SignupPage.js";
-import GenericPage from "./pages/GenericPage.js";
-import { BrowserRouter as Router, createBrowserRouter, RouterProvider, Routes, Route, Link } from 'react-router-dom'
-import AnswerEvaluation from './pages/AnswerEvaluation.js';
+import Sidebar from './components/Sidebar';
+import SidebarButton from "./components/SidebarButton";
+import StudentCourse from './pages/StudentCourse';
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import GenericPage from "./pages/GenericPage";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AnswerEvaluation from './pages/AnswerEvaluation';
+import Alert, { notifySuccess, notifyWarning, notifyError } from './components/Alert';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './globalStyles';
+import themes from './themes';
 
 function App() {
-    const router = createBrowserRouter([
-        {
-            path: "/",
-            element: <LoginPage />,
-        },
-        {
-            path: "/login",
-            element: <LoginPage />,
-        },
-        {
-            path: "/signup",
-            element: <SignupPage />,
-        },
-    ])
-
     return (
-        <div className="App">
-            <RouterProvider router={router} />
-        </div>
-    )
+        <ThemeProvider theme={themes}>
+            {/* apply global styles */}
+            <GlobalStyle />
+            <div className="App">
+                {/* set up routing for the application */}
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<LoginPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/signup" element={<SignupPage />} />
+                        {/* add other routes here */}
+                    </Routes>
+                </Router>
+                {/* render the Alert component to handle notifications */}
+                <Alert />
+                {/* example buttons to trigger different notifications */}
+                <button onClick={() => notifySuccess('Success!')}>Notify Success</button>
+                <button onClick={() => notifyWarning('Something is not correct!')}>Notify Warning</button>
+                <button onClick={() => notifyError('Error!')}>Notify Error</button>
+            </div>
+        </ThemeProvider>
+    );
 }
+
 export default App;

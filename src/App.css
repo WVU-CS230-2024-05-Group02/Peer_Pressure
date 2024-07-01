@@ -103,3 +103,21 @@ p {
 input::placeholder{
   font-style: italic;
 }
+
+.sidebar {
+  background-color: #e5f3f9;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  background-color: #516182;
+}
+
+.footer {
+  background-color: #2c3c64;
+}
+
+.content {
+  padding: 1rem;
+}
