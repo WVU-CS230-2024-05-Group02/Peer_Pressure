@@ -12,7 +12,6 @@ import ManageStudentsPage from "./pages/ManageStudentsPage";
 import Alert from './components/Alert'; 
 import Navbar from './components/Navbar'; // new
 
-
 function App() {
     return (
         <div className="App">
@@ -27,7 +26,7 @@ function App() {
                     {/* add other routes here */}
                 </Routes>
             </Router>
-            <Alert />
+            <Alert /> {/* render Alert component */}
         </div>
     );
 }

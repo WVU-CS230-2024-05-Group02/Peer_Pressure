@@ -1,31 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+function Navbar() {
+  const [click, setClick] = useState(false);
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <NavLink className="navbar-brand" to="/">Peer Pressure</NavLink>
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <NavLink exact to="/" className="nav-link" activeClassName="active">Home</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/evaluations" className="nav-link" activeClassName="active">Evaluations</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/grades" className="nav-link" activeClassName="active">Grades</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/course" className="nav-link" activeClassName="active">Course</NavLink>
-          </li>
-        </ul>
+    <>
+    <nav className="navbar">
+      <div className='navbar-container'>
+        <Link to='/' classNmae='navbar-logo'>
+          <img src="/PeerPressureLogo.png" alt="Peer Pressure Logo" style={{ width: '40px', height: '40px', marginRight: '10px' }} />
+          PEER PRESSURE <i className='fab fa-typo3' />
+        </Link>
+        <div className='menu-icon'>
+          <i className={click ? 'fas-fa-times': 'fa-solid fa-bars'} />
+        </div>
       </div>
     </nav>
+    </>
   );
 };
 
