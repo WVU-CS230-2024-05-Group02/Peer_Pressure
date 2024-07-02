@@ -121,3 +121,10 @@ input::placeholder{
 .content {
   padding: 1rem;
 }
+
+.navbar-logo img{
+  width: 80px;
+  height: auto;
+  margin-right: 10px;
+  position: top-center;
+}
