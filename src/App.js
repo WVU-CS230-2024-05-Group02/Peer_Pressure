@@ -11,6 +11,7 @@ import AnswerEvaluation from './pages/AnswerEvaluation';
 import ManageStudentsPage from "./pages/ManageStudentsPage"; 
 import Alert from './components/Alert'; 
 import Navbar from './components/Navbar'; // new
+import CreateClassPage from "./pages/CreateClassPage";
 
 function App() {
     return (
@@ -22,7 +23,8 @@ function App() {
                     <Route path="/signup" element={<SignupPage />} />
                     <Route path="/evaluations" element={<AnswerEvaluation />} />
                     <Route path="/course" element={<GenericPage><StudentCourse /></GenericPage>} />
-                    <Route path="/manageStudents" element={<ManageStudentsPage />} /> {/* Add ManageStudentsPage route */}
+                    <Route path="/managestudents" element={<ManageStudentsPage />} /> {/* Add ManageStudentsPage route */}
+                    <Route path="/createclass" element={<CreateClassPage />} />
                     {/* add other routes here */}
                 </Routes>
             </Router>
