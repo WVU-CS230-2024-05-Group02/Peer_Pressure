@@ -12,6 +12,7 @@ import ManageStudentsPage from "./pages/ManageStudentsPage";
 import Alert from './components/Alert'; 
 import Navbar from './components/Navbar'; // new
 import CreateClassPage from "./pages/CreateClassPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/course" element={<GenericPage><StudentCourse /></GenericPage>} />
                     <Route path="/managestudents" element={<ManageStudentsPage />} /> {/* Add ManageStudentsPage route */}
                     <Route path="/createclass" element={<CreateClassPage />} />
+                    <Route path="/home" element={<GenericPage><HomePage/></GenericPage>}/>
                     {/* add other routes here */}
                 </Routes>
             </Router>

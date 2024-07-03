@@ -128,3 +128,20 @@ input::placeholder{
   margin-right: 10px;
   position: top-center;
 }
+
+.homepageCourse {
+  background: var(--gray-blue);
+  min-width: "500px";
+  max-width: "500px";
+  border: "1px solid black";
+  margin: "10px";
+  border-radius: "5px"
+}
+
+.homepageCourse:hover{
+  background-color: var(--light-blue);
+  transform: scale(1.01);
+  filter: drop-shadow(10px 10px 20px rgba(36, 36, 36, 0.5)); 
+
+ 
+}
