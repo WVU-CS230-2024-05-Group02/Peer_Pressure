@@ -13,6 +13,7 @@ import Alert from './components/Alert';
 import Navbar from './components/Navbar'; // new
 import CreateClassPage from "./pages/CreateClassPage";
 import HomePage from "./pages/HomePage";
+import QuestionsPage from "./pages/QuestionsPage";
 
 function App() {
     return (
@@ -27,6 +28,8 @@ function App() {
                     <Route path="/managestudents" element={<ManageStudentsPage />} /> {/* Add ManageStudentsPage route */}
                     <Route path="/createclass" element={<CreateClassPage />} />
                     <Route path="/home" element={<GenericPage><HomePage/></GenericPage>}/>
+                    <Route path="/questionspage" element={<GenericPage><QuestionsPage/></GenericPage>}/>
+
                     {/* add other routes here */}
                 </Routes>
             </Router>

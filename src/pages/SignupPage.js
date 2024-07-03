@@ -17,7 +17,7 @@ const Signup = () => {
     };
 
     return (
-        <div className="background" style={{ height: '80vh'}}>
+        <div className="background">
             <div className="login-container">
                 <h1>Sign Up Page</h1>
                 <img className="login-logo" src={`${process.env.PUBLIC_URL}/PeerPressureLogo.png`} alt="App logo" />
