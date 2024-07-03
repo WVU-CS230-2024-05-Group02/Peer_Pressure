@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import SidebarButton from './SidebarButton'; 
+import SidebarButton from './SidebarButton';
 
 const Sidebar = () => {
   return (

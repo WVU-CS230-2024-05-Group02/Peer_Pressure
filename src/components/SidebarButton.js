@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+
 // accepts 'text' as a prop
 const SidebarButton = ({ text }) => {
   return (
