@@ -17,9 +17,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../App.css'; 
 
-const SidebarButton = ({ text }) => {
+const SidebarButton = ({ text, onClick }) => {
   return (
-    <button className="sidebar-button">
+    <button className="sidebar-button" onClick={onClick}>
       {text}
     </button>
   );
