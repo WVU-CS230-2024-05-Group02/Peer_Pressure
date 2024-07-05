@@ -4,6 +4,7 @@ const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [isInstructor, setIsInstructor] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSignup = (e) => {
@@ -12,7 +13,7 @@ const Signup = () => {
             setErrorMessage("Passwords do not match");
         } else {
             setErrorMessage("");
-            console.log("Signup email:", email, "password:", password);
+            console.log("Signup email:", email, "password:", password, "isInstructor:", isInstructor);
         }
     };
 
@@ -38,11 +39,21 @@ const Signup = () => {
                     />
                     <input
                         type="password"
-                        placeholder="Enter confirm password"
+                        placeholder="Confirm password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
+                    <div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isInstructor}
+                                onChange={(e) => setIsInstructor(e.target.checked)}
+                            />
+                            Sign up as an instructor
+                        </label>
+                    </div>
                     {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
                     <button type="submit">Signup</button>
                 </form>

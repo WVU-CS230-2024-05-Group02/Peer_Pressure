@@ -6,7 +6,7 @@ const RemoveStudentTable = ({ students, onRemoveSelected }) => {
     const [selectedStudents, setSelectedStudents] = useState([]);
     //Used for paginating the page of students shown and default to the first page
     const [currentPage, setCurrentPage] = useState(1);
-    const studentsPerPage = 5; // Number of students per page
+    const studentsPerPage = 4; // Number of students per page
 
     const handleSelect = (studentId) => {
         setSelectedStudents(prevState =>
