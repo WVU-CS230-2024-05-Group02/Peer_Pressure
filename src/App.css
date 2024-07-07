@@ -163,7 +163,7 @@ input::placeholder{
 }
 
 .footer-container {
-  background-color: white;
+  background-color: rgb(85, 85, 85);
   height: 22px;
   color: rgb(145, 142, 142);
 }
@@ -263,3 +263,16 @@ input::placeholder{
 }
 
 /* End of Generic */
+
+.new-course-card{
+  border: solid 2px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  width: 100vh;
+  height: 500px;
+  background-color: lightgray;
+  margin-top: 5px;
+  
+  
+}

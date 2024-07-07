@@ -1,17 +1,12 @@
-import React from "react";
+import React, { useState } from 'react';
 import '../App.css';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar.js';
-import Footer from '../components/Footer.js';
+import NewCourseForm from "../components/NewCourseForm"
 
 function CreateClassPage(){
     return(
         <div>
-             <Navbar />
-            <Sidebar className="sidebar" />
-            <Footer className="footer" />
-
-
+            <button>+ Add Class</button>
+            <NewCourseForm />
         </div>
     );
 }
