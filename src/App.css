@@ -276,3 +276,27 @@ input::placeholder{
   
   
 }
+
+.create-course-button{
+  margin-top: 5px;
+  width: 150px;
+}
+
+.create-class-textbox{
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 400px;
+}
+
+.class-color-selector{
+  width: 100px;
+}
+
+.exclude {
+  background-color: initial;
+  color: initial;
+  padding: initial;
+  border: initial;
+  border-radius: initial;
+}

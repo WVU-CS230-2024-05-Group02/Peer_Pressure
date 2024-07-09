@@ -8,6 +8,7 @@ function NewCourseForm(){
             <h2>New Course</h2>
                 <form className="course-form">
                     <input
+                        className="create-class-textbox"
                         type="text"
                         id="course-name"
                         name="course"
@@ -15,21 +16,38 @@ function NewCourseForm(){
                     />
                     
                     <input
+                        className="create-class-textbox"
                         type="number"
                         id="section-number"
                         name="sectionNumber"
                         placeholder="Section Number"
-                        className=""
                     />
 
                     <input 
+                        className="create-class-textbox"
                         type="number"
                         id="num-of-groups"
                         name="numOfGroups"
                         placeholder="# of Groups"
                     />
+                    <div>
+                        <label for="color">Class color: </label>
+                        <input 
+                        className="class-color-selector exclude"
+                        type="color"
+                        name="color"
+                        placeholder="sus"
+                        />
+                    </div>
 
-                    <a href="about:blank">Import from eCampus</a>
+                    <div>
+                        <button className="create-course-button">+ Create Course</button>
+                    </div>
+
+                    <div>
+                        {/* non-functional obviously */}
+                        <a href="about:blank">Import from eCampus</a>
+                    </div>
             </form>
         </div>
     );
