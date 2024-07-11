@@ -9,11 +9,12 @@ import GenericPage from "./pages/GenericPage";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AnswerEvaluation from './pages/AnswerEvaluation';
 import ManageStudentsPage from "./pages/ManageStudentsPage"; 
-import Alert from './components/Alert'; 
-import Navbar from './components/Navbar'; // new
+import { ToastContainer } from 'react-toastify'; 
+import Navbar from './components/Navbar'; 
 import CreateClassPage from "./pages/CreateClassPage";
 import HomePage from "./pages/HomePage";
 import QuestionsPage from "./pages/QuestionsPage";
+import AlertStoragePage from "./pages/AlertStoragePage";
 
 function App() {
     return (
@@ -23,17 +24,16 @@ function App() {
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignupPage />} />
-                    <Route path="/evaluations" element={<AnswerEvaluation />} />
+                    <Route path="/evaluations" element={<GenericPage><AnswerEvaluation /></GenericPage>} />
                     <Route path="/course" element={<GenericPage><StudentCourse /></GenericPage>} />
-                    <Route path="/managestudents" element={<GenericPage><ManageStudentsPage/></GenericPage>}/> {/* Add ManageStudentsPage route */}
+                    <Route path="/managestudents" element={<GenericPage><ManageStudentsPage /></GenericPage>} />
                     <Route path="/createclass" element={<GenericPage><CreateClassPage /></GenericPage>} />
-                    <Route path="/home" element={<GenericPage><HomePage/></GenericPage>}/>
-                    <Route path="/questionspage" element={<GenericPage><QuestionsPage/></GenericPage>}/>
-
-                    {/* add other routes here */}
+                    <Route path="/home" element={<GenericPage><HomePage /></GenericPage>} />
+                    <Route path="/questionspage" element={<GenericPage><QuestionsPage /></GenericPage>} />
+                    <Route path="/alert" element={<GenericPage><AlertStoragePage /></GenericPage>}/> {/* Add AlertStoragePage route */}
                 </Routes>
             </Router>
-            <Alert /> {/* render Alert component */}
+            <ToastContainer /> {/* Render ToastContainer for notifications */}
         </div>
     );
 }

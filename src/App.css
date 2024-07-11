@@ -168,8 +168,6 @@ input::placeholder{
   color: rgb(145, 142, 142);
 }
 
-/* new */
-
 .navbar {
   background: #516182;
   height: 70px;
@@ -300,3 +298,58 @@ input::placeholder{
   border: initial;
   border-radius: initial;
 }
+
+/* alertpage */
+.alert-storage-container {
+  padding: 10px;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow: auto; /* Ensure content is scrollable if it overflows */
+}
+
+.alert-storage-container h1,
+.alert-storage-container h2 {
+  margin-bottom: 20px;
+}
+
+.alert-storage-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.alert-storage-container li {
+  background: #f4f4f4;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+/* toast Styles */
+.Toastify__toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.Toastify__toast-body {
+  display: flex;
+  align-items: center;
+}
+
+.Toastify__toast-body > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Toastify__close-button {
+  align-self: flex-start;
+}
+/* END toast */

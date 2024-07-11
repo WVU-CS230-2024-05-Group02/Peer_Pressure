@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Textbox from "../components/Textbox";
 import Footer from "../components/Footer";
+import { notifySuccess, notifyWarning, notifyError } from '../components/Alert';
 import '../App.css';
 
 function LoginPage() {
@@ -39,7 +40,7 @@ function LoginPage() {
       // Navigate to the home page
       navigate('/home');
     } else {
-      alert("Invalid credentials. Please try again.");
+      notifyError("Invalid credentials. Please try again.");
     }
   };
 

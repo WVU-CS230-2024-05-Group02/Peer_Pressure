@@ -2,6 +2,18 @@ import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const storeAlert = (type, message) => {
+    const alerts = JSON.parse(localStorage.getItem('alerts')) || [];
+    const newAlert = {
+        id: Date.now(),
+        type,
+        message,
+        timestamp: new Date().toISOString(),
+    };
+    alerts.push(newAlert);
+    localStorage.setItem('alerts', JSON.stringify(alerts));
+};
+
 export const notifySuccess = (message) => {
     toast.success(message, {
         position: "top-center",
@@ -13,6 +25,7 @@ export const notifySuccess = (message) => {
         progress: undefined,
         theme: "colored",
     });
+    storeAlert('success', message);
 };
 
 export const notifyWarning = (message) => {
@@ -26,6 +39,7 @@ export const notifyWarning = (message) => {
         progress: undefined,
         theme: "colored",
     });
+    storeAlert('warning', message);
 };
 
 export const notifyError = (message) => {
@@ -39,9 +53,9 @@ export const notifyError = (message) => {
         progress: undefined,
         theme: "colored",
     });
+    storeAlert('error', message);
 };
 
-// component to render the ToastContainer which is required for displaying notifications
 const Alert = () => {
     return <ToastContainer />;
 };

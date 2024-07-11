@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { notifySuccess, notifyWarning, notifyError } from '../components/Alert';
 
 const Signup = () => {
     const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ const Signup = () => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setErrorMessage("Passwords do not match");
+            notifyError("Passwords do not match");
         } else {
             setErrorMessage("");
             console.log("Signup email:", email, "password:", password, "isInstructor:", isInstructor);
