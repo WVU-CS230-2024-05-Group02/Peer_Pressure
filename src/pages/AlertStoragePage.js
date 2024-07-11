@@ -6,7 +6,6 @@ const getRecentAlerts = () => {
     const alerts = JSON.parse(localStorage.getItem('alerts')) || [];
     const now = new Date();
     const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7));
-
     return alerts.filter(alert => new Date(alert.timestamp) >= sevenDaysAgo);
 };
 
@@ -14,7 +13,7 @@ const AlertStoragePage = () => {
     const [alerts, setAlerts] = useState([]);
 
     useEffect(() => {
-        setAlerts(getRecentAlerts());
+        setAlerts(getRecentAlerts().reverse());
     }, []);
 
     return (

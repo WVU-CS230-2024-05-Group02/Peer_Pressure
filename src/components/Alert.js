@@ -10,8 +10,21 @@ const storeAlert = (type, message) => {
         message,
         timestamp: new Date().toISOString(),
     };
+    // Add the new alert to the list
     alerts.push(newAlert);
-    localStorage.setItem('alerts', JSON.stringify(alerts));
+
+    // Filter out alerts older than 7 days
+    const now = new Date();
+    const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7));
+    const recentAlerts = alerts.filter(alert => new Date(alert.timestamp) >= sevenDaysAgo);
+
+    // Keep only the most recent 50 alerts
+    while (recentAlerts.length > 50) {
+        recentAlerts.shift(); // Remove the oldest alert
+    }
+
+    // Save the updated list to localStorage
+    localStorage.setItem('alerts', JSON.stringify(recentAlerts));
 };
 
 export const notifySuccess = (message) => {
