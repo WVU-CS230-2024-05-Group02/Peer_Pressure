@@ -61,7 +61,7 @@ function StudentCourse(){
                 <StudentCourseRightInfoBox leftHeader={"Course Alerts"} infoInside={["January, 1st: Alert Alert Alert"]}/>
 
                  {/* My Grades Section */}
-                <StudentCourseRightInfoBox leftHeader={"Grades"} rightHeader={"Average Grade: Bad"} infoInside={["Evaluation Title - 50%", "Evaluation Title - 75%"]}/>
+                <StudentCourseRightInfoBox leftHeader={"Grades"} rightHeader={"Overall Grade: 85"} infoInside={["Evaluation Title - 50%", "Evaluation Title - 75%"]}/>
 
                 {/* My Group Section */}
                 <StudentCourseRightInfoBox leftHeader={"Group"} rightHeader={"Group 1"} infoInside={["Shawn", "Ezra", "Violet", "Lucas", "Banafsheh", "Extra ..."]}/>

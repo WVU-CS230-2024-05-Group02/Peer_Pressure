@@ -353,3 +353,13 @@ input::placeholder{
   align-self: flex-start;
 }
 /* END toast */
+
+.evaluationSubmit {
+  background-color: var(--dark-blue);
+}
+
+.evaluationSubmit:hover {
+  background-color: var(--mid-blue);
+  transform: scale(1.01);
+  filter: drop-shadow(4px 4px 4px rgba(36, 36, 36, 0.5)); 
+}

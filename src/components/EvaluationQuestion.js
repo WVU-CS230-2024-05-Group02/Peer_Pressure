@@ -7,7 +7,7 @@ function QuestionResponse(props){
 
     if(props.justification){
         return (
-            <div class="col" style={{border: "1px solid black", borderRadius: "5px", padding: "1%", marginBottom: "20px"}}>
+            <div class="col" style={{textAlign: "left", border: "1px solid black", borderRadius: "5px", padding: "1%", marginBottom: "20px"}}>
                 <h5>{props.title}</h5>
                 <p>{props.description}</p>
     
@@ -34,7 +34,7 @@ function QuestionResponse(props){
     } 
     else {
         return (
-            <div class="col" style={{border: "1px solid black", borderRadius: "5px", padding: "1%", marginBottom: "20px"}}>
+            <div class="col" style={{textAlign: "left", border: "1px solid black", borderRadius: "5px", padding: "1%", marginBottom: "20px"}}>
                 <h5>{props.title}</h5>
                 <p>{props.description}</p>
     

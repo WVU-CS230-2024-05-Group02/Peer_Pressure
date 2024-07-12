@@ -25,10 +25,10 @@ function StudentCourseRightInfoBox(props){
         <div style={rightSideCards}> 
                     
             <div class="row" style={{marginBottom: "10px"}}>
-                <div class="col-lg-4">                    
+                <div class="col-lg-5">                    
                     <h5 class="float-left">{props.leftHeader}</h5>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <h5 class="float-right">{props.rightHeader}</h5>
                 </div>
             </div>
