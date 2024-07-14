@@ -4,13 +4,8 @@ import AddStudentForm from '../components/AddStudentForm';
 import RemoveStudentTable from '../components/RemoveStudentTable';
 
 const ManageStudentsPage = () => {
-    // setStudents to update the student list and students as what is shows
     const [students, setStudents] = useState([]);
-    //The useEffect hook in React allows you to perform side effects in function components.
-    // A side effect refers to any operation or action that affects something outside the scope of a pure function
     useEffect(() => {
-        // Simulate fetching data from a server until we have the DB so that we can fetch from there
-        // Used async call here to not stop loading the page due to connection to DB
         const fetchStudents = async () => {
             const data = [
                 { firstName: 'John1', lastName: 'Doe', email: 'john.doe@example.com', studentId: '1' },
@@ -21,29 +16,29 @@ const ManageStudentsPage = () => {
                 { firstName: 'John6', lastName: 'Doe', email: 'john.beam@example.com', studentId: '6' },
                 { firstName: 'John7', lastName: 'Doe', email: 'john.beam@example.com', studentId: '7' },
             ];
-            // To setup the students shows
             setStudents(data);
         };
         fetchStudents();
     }, []);
 
     const handleAddStudent = (newStudent) => {
-        // Used to update the list shown, Will have to add the logic for adding to the DB later
         setStudents([...students, newStudent]);
     };
 
     const handleRemoveSelected = (selectedStudentIds) => {
-        // Used to update the list shown, Will have to add the logic for removing from the DB later
         setStudents(students.filter(student => !selectedStudentIds.includes(student.studentId)));
     };
 
     return (
-        <div className="col" style={{ height: '80vh', display: 'flex', flexDirection: 'column' }}>
+        <div className="container" style={{ height: '80vh', display: 'flex', flexDirection: 'column' }}>
             <TitleBar title="Manage Student Page" type="main" />
-
-            <div style={{ display: 'flex', justifyContent: 'flex-start', flex: 1, marginTop: '2%' }}>
-                <AddStudentForm onAddStudent={handleAddStudent} />
-                <RemoveStudentTable students={students} onRemoveSelected={handleRemoveSelected} />
+            <div className="row" style={{ marginTop: '2%' }}>
+                <div className="col-lg-6 col-md-12 mb-3" style={{ height: '100%' }}>
+                    <AddStudentForm onAddStudent={handleAddStudent} />
+                </div>
+                <div className="col-lg-6 col-md-12" style={{ height: '100%' }}>
+                    <RemoveStudentTable students={students} onRemoveSelected={handleRemoveSelected} />
+                </div>
             </div>
         </div>
     );
