@@ -5,21 +5,24 @@ import '../App.css';
 
 function Navbar() {
   const [click, setClick] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 960);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 960);
+    if (window.innerWidth > 960) {
       setClick(false);
     }
   };
 
   useEffect(() => {
-    showButton();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
-
-  window.addEventListener('resize', showButton);
 
   return (
     <>
@@ -61,4 +64,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
