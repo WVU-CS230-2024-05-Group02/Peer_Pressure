@@ -29,7 +29,7 @@ function App() {
                     <Route path="/managestudents" element={<GenericPage><ManageStudentsPage /></GenericPage>} />
                     <Route path="/createclass" element={<GenericPage><CreateClassPage /></GenericPage>} />
                     <Route path="/home" element={<GenericPage><HomePage /></GenericPage>} />
-                    <Route path="/questionspage" element={<GenericPage><QuestionsPage /></GenericPage>} />
+                    <Route path="/createevaluation" element={<GenericPage><QuestionsPage /></GenericPage>} />
                     <Route path="/alert" element={<GenericPage><AlertStoragePage /></GenericPage>}/> {/* Add AlertStoragePage route */}
                 </Routes>
             </Router>

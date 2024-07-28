@@ -35,28 +35,6 @@ function Navbar() {
           <div className='navbar__menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
-          <ul className={click ? 'navbar__menu active' : 'navbar__menu'}>
-            <li className='navbar__item'>
-              <Link to='/home' className='navbar__links' onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className='navbar__item'>
-              <Link to='/alert' className='navbar__links' onClick={closeMobileMenu}>
-                Alerts
-              </Link>
-            </li>
-            <li className='navbar__item'>
-              <Link to='/grades' className='navbar__links' onClick={closeMobileMenu}>
-                Grades
-              </Link>
-            </li>
-            <li className='navbar__item'>
-              <Link to='/course' className='navbar__links' onClick={closeMobileMenu}>
-                Courses
-              </Link>
-            </li>
-          </ul>
         </div>
       </nav>
     </>

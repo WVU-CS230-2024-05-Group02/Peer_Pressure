@@ -6,7 +6,7 @@ function NewCourseForm(){
     return(
         <div className="new-course-card">
             <h2>New Course</h2>
-                <form className="course-form">
+                <form action="/api/createcourse" className="course-form" method="post">
                     <input
                         className="create-class-textbox"
                         type="text"
@@ -23,14 +23,15 @@ function NewCourseForm(){
                         placeholder="Section Number"
                     />
 
-                    <input 
+                    {/* <input 
                         className="create-class-textbox"
                         type="number"
                         id="num-of-groups"
                         name="numOfGroups"
                         placeholder="# of Groups"
-                    />
-                    <div>
+                    /> */}
+
+                    {/* <div>
                         <label for="color">Class color: </label>
                         <input 
                         className="class-color-selector exclude"
@@ -38,16 +39,11 @@ function NewCourseForm(){
                         name="color"
                         placeholder="sus"
                         />
-                    </div>
+                    </div> */}
 
-                    <div>
-                        <button className="create-course-button">+ Create Course</button>
-                    </div>
+                    <button type="submit" className="create-course-button">+ Create Course</button>
 
-                    <div>
-                        {/* non-functional obviously */}
-                        <a href="about:blank">Import from eCampus</a>
-                    </div>
+           
             </form>
         </div>
     );

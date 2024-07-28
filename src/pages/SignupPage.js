@@ -31,11 +31,7 @@ const Signup = () => {
                         name="password"
 
                     />
-                    {/* <input
-                        type="password"
-                        placeholder="Confirm password"
 
-                    /> */}
                   
                     <label class="float-left" for="isInstructor">Sign up as an instructor</label>
                     <input class="float-left"
