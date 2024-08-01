@@ -54,8 +54,6 @@ app.get("/api/currentCourse", (req, res) => {
         }
     }
 
-
-    currentCourse = thisCourses[0];
     res.json(currentCourse);
 })
 
@@ -72,7 +70,15 @@ app.get("/api/instructor", (req, res) => {
 });
 
 
-// Calls to get the data
+
+// Calls to post the data
+app.post("/api/setCurrentCourse", (req, res) => {
+    const data = req.body;
+    currentCourse = data.courseID;
+
+    res.redirect("/course")
+});
+
 app.post("/api/login", async (req, res) => {
 
     var e = req.body.email;

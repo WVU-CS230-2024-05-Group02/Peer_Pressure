@@ -25,10 +25,10 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignupPage />} />
                     <Route path="/evaluations" element={<AnswerEvaluation/>} />
-                    <Route path="/course" element={<GenericPage><StudentCourse /></GenericPage>} />
+                    <Route path="/course" element={<StudentCourse/>} />
                     <Route path="/managestudents" element={<GenericPage><ManageStudentsPage /></GenericPage>} />
                     <Route path="/createclass" element={<GenericPage><CreateClassPage /></GenericPage>} />
-                    <Route path="/home" element={<GenericPage><HomePage /></GenericPage>} />
+                    <Route path="/home" element={<GenericPage><HomePage/></GenericPage>} />
                     <Route path="/createevaluation" element={<GenericPage><QuestionsPage /></GenericPage>} />
                     <Route path="/alert" element={<GenericPage><AlertStoragePage /></GenericPage>}/> {/* Add AlertStoragePage route */}
                 </Routes>

@@ -5,37 +5,12 @@ import { useNavigate } from 'react-router-dom';
 function HomePage() {
 
     const [user, setUser] = useState(null);
-    const [instructor, setInstructor] = useState(null);
-    const [student, setStudent] = useState(null);
     const [courses, setCourses] = useState(null);
 
     const [loadingCourse, setLoading] = useState(true);
     const [loadingUser, setLoadingUser] = useState(true);
 
     useEffect(() => {
-        
-
-        
-        const fetchInstructor = async() => {
-            try{
-                const response = await fetch('/api/instructor');
-                const data = await response.json();
-                setInstructor(data);
-            } catch (err) {
-                console.error("Error Fetching User Data: ", err);
-            }
-        };
-
-        const fetchStudent = async() => {
-            try{
-                const response = await fetch('/api/student');
-                const data = await response.json();
-                setStudent(data);
-            } catch (err) {
-                console.error("Error Fetching User Data: ", err);
-            }
-        };
-
         const fetchUser = async() => {
             try{
                 const response = await fetch('/api/user');
@@ -83,6 +58,7 @@ function HomePage() {
                         evaluation2="Not overdue due date"
                         grade={user.isInstructor ? "" : "Would put in student's grade"}
                         key={course.id}
+                        courseID={course.id}
                     />
                 ))}
             </div> 

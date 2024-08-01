@@ -1,14 +1,30 @@
 import React from 'react';
 import "../App.css";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function HomeCourseBox(props){
+    const navigate = useNavigate();
 
     // Props that are passed
     // title - description - groupNumber - evaluation1, evaluation2, evaluation3 - grade
+    // courseID
+
+    const handleClick = async () => {
+        let courseID = props.courseID;
+
+        try {
+            const response = await axios.post('/api/setCurrentCourse', {courseID})
+            // Go to new page with props.courseID passed through
+            navigate('/course');
+        } catch (error){
+            console.error('There was an error!', error);
+        }
+    }
 
     return (
-        <button class="col homepageCourse" style={{textAlign: "left", color: "black", minWidth: "500px", maxWidth: "500px", margin: "10px", borderRadius: "5px" }}>
-            
+        <button onClick={handleClick} class="col homepageCourse" style={{textAlign: "left", color: "black", minWidth: "500px", maxWidth: "500px", margin: "10px", borderRadius: "5px" }}>
+
             <div class="row" style={{margin: "auto"}}>
                 <h2 class="col-10 float-left">{props.title}</h2>
                 
