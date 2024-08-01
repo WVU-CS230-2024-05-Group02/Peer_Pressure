@@ -18,7 +18,7 @@ function HomeCourseBox(props){
             // Go to new page with props.courseID passed through
             navigate('/course');
         } catch (error){
-            console.error('There was an error!', error);
+            console.error('Can not get course', error);
         }
     }
 

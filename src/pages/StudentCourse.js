@@ -206,7 +206,7 @@ function StudentCourse(){
                 {evals.map(evaluation => (
                     <div style={{marginBottom: "15px"}}>
                         <h4 class="text-left" style={{color: "Green"}}> <u>Evaluations: </u> </h4>
-                        <StudentEvaluation dueDate={evaluation.dueDate} title={evaluation.title} description={evaluation.description}/>
+                        <StudentEvaluation id={evaluation.evaluationID} dueDate={evaluation.dueDate} title={evaluation.title} description={evaluation.description}/>
                     </div> 
                 ))}
             </div>
@@ -234,7 +234,6 @@ function StudentCourse(){
                 {showEvaluations()}
             </div>
 
-            
 
             {/*Group, Students, Grades section*/}
             <div class="col-lg-4" style={{backgroundColor: midBlue, borderLeft: "1px solid black", height: "calc(100vh - 120px)"}}>

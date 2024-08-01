@@ -49,7 +49,7 @@ function HomePage() {
     function showCourseBoxes() {        
         return (
             <div>
-                {courses.map(course => (
+                {courses.map( course => (
                     <HomeCourseBox
                         title={course.title}
                         description=""

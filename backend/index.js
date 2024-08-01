@@ -35,6 +35,8 @@ var thisUser;
 var thisCourses = [];
 var currentCourse;
 
+var currentEvaluation;
+
 app.get("/api/courses", (req, res) => {
     res.json(thisCourses);
 })
@@ -101,7 +103,13 @@ app.get("/api/instructor", (req, res) => {
     res.json(thisInstructor);
 });
 
-app.get("/api/currentEvaluation", (req, res) => {
+app.get("/api/currentEvaluation", async (req, res) => {
+    
+    let currentEval = await Evaluation.findOne(
+        {evaluationID: currentEvaluation}
+    )
+
+    res.json(currentEval);
 
 });
 
@@ -109,7 +117,9 @@ app.get("/api/currentEvaluation", (req, res) => {
 
 // Calls to post the data
 app.post("/api/setCurrentEvaluation", (req, res) => {
-
+    const id = req.body.id;
+    currentEvaluation = id;
+    res.redirect('/evaluations')
 });
 
 app.post("/api/setCurrentCourse", (req, res) => {
@@ -580,10 +590,3 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-
-
-
-
-
-
-
