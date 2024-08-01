@@ -54,8 +54,40 @@ app.get("/api/currentCourse", (req, res) => {
         }
     }
 
-    res.json(currentCourse);
-})
+    var index = 0;
+    for(var i = 0; i < thisCourses.length; i++){
+        if(thisCourses[i].id == currentCourse){
+            index = i
+        }
+    }
+
+    res.json(thisCourses[index]);
+});
+
+app.get("/api/evaluations", async (req, res) => {
+    
+    // Gets the current course
+    var index = 0;
+    for(var i = 0; i < thisCourses.length; i++){
+        if(thisCourses[i].id == currentCourse){
+            index = i
+        }
+    }
+    var course = thisCourses[index];
+
+    var evaluations = [];
+
+    for(let i = 0; i < course.evalIDs.length; i++){
+        let eval = await Evaluation.findOne(
+            {evaluationID: course.evalIDs[i]}
+        );
+
+        evaluations.push(eval);
+    }
+
+    res.json(evaluations);
+});
+
 
 app.get("/api/user", (req, res) => {
     res.json(thisUser);
@@ -69,9 +101,17 @@ app.get("/api/instructor", (req, res) => {
     res.json(thisInstructor);
 });
 
+app.get("/api/currentEvaluation", (req, res) => {
+
+});
+
 
 
 // Calls to post the data
+app.post("/api/setCurrentEvaluation", (req, res) => {
+
+});
+
 app.post("/api/setCurrentCourse", (req, res) => {
     const data = req.body;
     currentCourse = data.courseID;
@@ -95,9 +135,6 @@ app.post("/api/login", async (req, res) => {
             // Put user information
             thisUser = users[0];
 
-            console.log("Updated: " + thisUser)
-
-
             thisCourses = []
 
             // Put information for instructor or student
@@ -120,9 +157,6 @@ app.post("/api/login", async (req, res) => {
                     thisCourses.push(foundCourse);
                 }
             }
-
-            console.log(thisCourses);
-
             res.redirect("/home");
         } else {
             console.log("Failed");
@@ -294,6 +328,7 @@ app.post("/api/removestudent", async (req, res) => {
     }
     removeStudent.studentIDs = removeStudent.studentIDs.filter(id => id != email);
     removeStudent.groupIDs.splice(removeGroup, 1);
+    removeStudent.grades.splice(removeGroup, 1);
 
     // update thisCourses api
     for(var i = 0; i < thisCourses.length; i++){
@@ -305,7 +340,7 @@ app.post("/api/removestudent", async (req, res) => {
     // Update the course on the db
     await Course.updateOne(
         {id: thisCourse},
-        {$set: {studentIDs: removeStudent.studentIDs, groupIDs: removeStudent.groupIDs}}
+        {$set: {studentIDs: removeStudent.studentIDs, groupIDs: removeStudent.groupIDs, grades: removeStudent.grades}}
     );
 
     res.redirect("/managestudents")
@@ -360,10 +395,11 @@ app.post("/api/addstudent", async (req, res) => {
     const numberGroup = parseInt(group.replace('Group ', ''), 10);
 
     currentCourse.groupIDs.push(numberGroup);
+    currentCourse.grades.push(100);
 
     result = await Course.updateOne(
         {id: thisCourse},
-        {$set: {studentIDs: currentCourse.studentIDs, groupIDs: currentCourse.groupIDs}}
+        {$set: {studentIDs: currentCourse.studentIDs, groupIDs: currentCourse.groupIDs, grades: currentCourse.grades}}
     );
 
 
@@ -464,6 +500,78 @@ app.post("/api/editstudent", async (req, res) => {
 
     res.redirect("/managestudents");
 });
+
+app.post("/api/createEvaluation", async (req, res) => {
+    var dueDate = req.body.date;
+    var title = req.body.title;
+    var description = req.body.description;
+
+    var newEvalID = Math.floor(Math.random() * (100000000 - 1 + 1)).toString();
+
+    let studentGrades = []
+    
+
+    var index = 0;
+    for(var i = 0; i < thisCourses.length; i++){
+        if(thisCourses[i].id == currentCourse){
+            index = i
+        }
+    }
+
+    course = thisCourses[index];
+
+    for(student in course.studentIDs){
+        studentGrades.push("0 0")
+    }
+
+    // Saved evaluation
+    let save = new Evaluation({
+        courseID: currentCourse.id,
+        evaluationID: newEvalID,
+        questions: currentQuestions,
+        currentGrades: studentGrades,
+        dueDate: dueDate,
+        title: title,
+        description: description
+    });
+
+    // save the new evaluation
+    save.save();
+
+    // Add the evaluation id to the course
+    thisCourses[index].evalIDs.push(newEvalID);
+
+    await Course.updateOne(
+        {id: thisCourses[index].id},
+        {$set: {evalIDs: thisCourses[index].evalIDs}}
+    );
+
+
+    currentQuestions = [];
+
+    res.redirect("/course")
+});
+
+
+var currentQuestions = []
+app.post("/api/addquestion", (req, res) => {
+   
+    if(req.body.delete == true){
+        currentQuestions = [];
+        res.redirect("/createevaluation");
+        return;
+    }
+   
+    let q = req.body.question;
+
+    currentQuestions.push(q);
+
+    res.redirect("/createevaluation");
+});
+
+app.get("/api/currentQuestions", (req, res) => {
+    res.json(currentQuestions);
+})
 
 
 // THIS NEEDS TO BE AT THE END

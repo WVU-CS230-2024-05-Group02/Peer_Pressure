@@ -4,8 +4,10 @@ import AddStudentForm from '../components/AddStudentForm';
 import RemoveStudentTable from '../components/RemoveStudentTable';
 import RemoveStudentForm from "../components/RemoveStudentForm";
 import EditStudentForm from "../components/EditStudentForm";
+import { useNavigate } from 'react-router-dom';
 
 const ManageStudentsPage = () => {
+    const navigate = useNavigate();
 
     const [course, setCurrentCourse] = useState(null);
     const [loadingStudents, setLoadingStudents] = useState(true);
@@ -48,6 +50,10 @@ const ManageStudentsPage = () => {
         )
     }
 
+    function handleBack(){
+        navigate('/course');
+    }
+
     return (
         <div className="container" style={{ height: '80vh', display: 'flex', flexDirection: 'column' }}>
             <TitleBar title="Manage Student Page" type="main" />
@@ -72,8 +78,8 @@ const ManageStudentsPage = () => {
                 </div>
                 </div>
 
-
-
+                <hr/>
+                <button onClick={handleBack}>Go Back</button>
                
             </div>
 

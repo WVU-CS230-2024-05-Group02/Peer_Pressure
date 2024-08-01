@@ -9,6 +9,9 @@ const courseSchema = new mongoose.Schema({
     groupIDs: [{
         type: Number,
     }],
+    grades: [{
+        type: Number,
+    }],
     evalIDs: [{
         type: String,
     }],

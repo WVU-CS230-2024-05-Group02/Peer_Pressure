@@ -16,9 +16,19 @@ function StudentCourseRightInfoBox(props){
     };
 
 
-    if(props.infoInside.length > 5){
-        props.infoInside[5] = "..."
+
+    const showInfo = () => {
+        return (
+            <div style={{padding: "0px", margin: "0px"}}>
+                {props.infoInside.map(line => (
+                    <p class="text-start" style={{marginBottom: "8px"}}>{line}</p>
+                ))}
+
+            </div>
+        )
     }
+
+    
 
 
     return(
@@ -33,15 +43,7 @@ function StudentCourseRightInfoBox(props){
                 </div>
             </div>
 
-            {/* Maxed at size 5 */}
-            <div style={{padding: "0px", margin: "0px"}}>
-                <p class="text-start" style={{marginBottom: "8px"}}>{props.infoInside[0]}</p>
-                <p class="text-start" style={{marginBottom: "8px"}}>{props.infoInside[1]}</p>
-                <p class="text-start" style={{marginBottom: "8px"}}>{props.infoInside[2]}</p>
-                <p class="text-start" style={{marginBottom: "8px"}}>{props.infoInside[3]}</p>
-                <p class="text-start" style={{marginBottom: "8px"}}>{props.infoInside[4]}</p>
-                <p class="text-start" style={{marginBottom: "8px"}}>{props.infoInside[5]}</p>
-            </div>
+            {showInfo()}
 
         </div>
     );
