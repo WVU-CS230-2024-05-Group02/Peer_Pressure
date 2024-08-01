@@ -6,6 +6,9 @@ const courseSchema = new mongoose.Schema({
     studentIDs: [{ // Array of strings
         type: String,
     }],
+    groupIDs: [{
+        type: Number,
+    }],
     evalIDs: [{
         type: String,
     }],

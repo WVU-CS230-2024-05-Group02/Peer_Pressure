@@ -7,18 +7,14 @@ function HomePage() {
     const [user, setUser] = useState(null);
     const [instructor, setInstructor] = useState(null);
     const [student, setStudent] = useState(null);
+    const [courses, setCourses] = useState(null);
+
+    const [loadingCourse, setLoading] = useState(true);
+    const [loadingUser, setLoadingUser] = useState(true);
 
     useEffect(() => {
         
-        const fetchUser = async() => {
-            try{
-                const response = await fetch('/api/user');
-                const data = await response.json();
-                setUser(data);
-            } catch (err) {
-                console.error("Error Fetching User Data: ", err);
-            }
-        };
+
         
         const fetchInstructor = async() => {
             try{
@@ -39,44 +35,72 @@ function HomePage() {
                 console.error("Error Fetching User Data: ", err);
             }
         };
-        
-        fetchStudent()
-        fetchInstructor()
-        fetchUser()
-    }, []);
-  
-    const processData = () => {
-        if(user) {
-            console.log('User Name: ' + user.username);
-            console.log('User email: ' + user.email);
-            console.log('User PW: ' + user.password);
-            console.log('User II: ' + user.isInstructor);
-       
-            // Student
-            if(!user.isInstructor) {
-                console.log("User Courses: " + student.courseID);
-                console.log("User Groups: " + student.groupID);
-            } else {
-                console.log("User ID: " + instructor.userId)
-                console.log("User Course Instructor: " + instructor.courseID)
-            }
-        } 
 
+        const fetchUser = async() => {
+            try{
+                const response = await fetch('/api/user');
+                const data = await response.json();
+                setUser(data);
+            } catch (err) {
+                console.error("Error Fetching User Data: ", err);
+            } finally {
+                setLoadingUser(false);
+            }
+        };
+
+        const fetchCourses = async() => {
+            try {
+                const response = await fetch("/api/courses");
+                const data = await response.json();
+
+                setCourses(data);
+            } catch (err) {
+                console.error("Error fetching courses data: ", err)
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+        fetchCourses();
+        fetchUser();
+
+        // fetchInstructor();
+        // fetchStudent();
+
+    }, []);
+
+    
+
+    function showCourseBoxes() {        
+        return (
+            <div>
+                {courses.map(course => (
+                    <HomeCourseBox
+                        title={course.title}
+                        description=""
+                        groupNumber="3"
+                        evaluation1="Overdue Due Date - Red If Necessary"
+                        evaluation2="Not overdue due date"
+                        grade={user.isInstructor ? "" : "Would put in student's grade"}
+                        key={course.id}
+                    />
+                ))}
+            </div> 
+        )
     }
 
-    processData();
+    // Display loading indicator while fetching data
+    if (loadingCourse || loadingUser) {
+        return <div>Loading courses...</div>; 
+    }
+
+    if(courses == null || courses.length === 0){
+        return <div>No Courses...</div>
+    }
 
     return (
         <div className="row">
-        
-            <HomeCourseBox
-                title="Software Engineering"
-                description="Teaches the fundamentals of software engineering through web app development."
-                groupNumber="3"
-                evaluation1="Overdue Due Date - Red If Necessary"
-                evaluation2="Not overdue due date"
-                grade="99"
-            />
+            {showCourseBoxes()}
         </div>
     );
 }
