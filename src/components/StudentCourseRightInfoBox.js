@@ -1,5 +1,3 @@
-import React from "react";
-
 // The info boxes on the right side of student course page
 function StudentCourseRightInfoBox(props){
 
@@ -15,9 +13,10 @@ function StudentCourseRightInfoBox(props){
         marginTop: "20px",
     };
 
-
-
     const showInfo = () => {
+
+        if(props.infoInside == null) return;
+
         return (
             <div style={{padding: "0px", margin: "0px"}}>
                 {props.infoInside.map(line => (
@@ -27,9 +26,6 @@ function StudentCourseRightInfoBox(props){
             </div>
         )
     }
-
-    
-
 
     return(
         <div style={rightSideCards}> 

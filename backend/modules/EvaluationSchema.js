@@ -6,6 +6,7 @@ const evaluationSchema = new mongoose.Schema({
     evaluationID: String,
     questions: [String],
     currentGrades: [String],
+    justifications: [[String]],
     dueDate: String,
     title: String,
     description: String

@@ -33,6 +33,7 @@ var thisStudent;
 var thisInstructor;
 var thisUser;
 var thisCourses = [];
+// Id of the current course the user is on
 var currentCourse;
 
 var currentEvaluation;
@@ -113,9 +114,187 @@ app.get("/api/currentEvaluation", async (req, res) => {
 
 });
 
+app.get("/api/currentGrade", async (req, res) => {
+    // Gets the current course
+    var index = 0;
+    for(let i = 0; i < thisCourses.length; i++){
+        if(thisCourses[i].id == currentCourse){
+            index = i
+        }
+    }
+    
+    let course = thisCourses[index];
+    let evals = []
+    for(let i = 0; i < course.evalIDs.length; i++){
+        let eval = await Evaluation.findOne(
+            {evaluationID: course.evalIDs[i]}
+        );
+        evals.push(eval);
+    };
+
+    let userIndex = 0;
+    for(let i = 0; i < course.studentIDs.length; i++){
+        if(course.studentIDs[i] == thisUser.userId) userIndex = i;
+    }
+
+    let allNumberVals = 0
+    let totalQuestions = 0
+    for(let i = 0; i < evals.length; i++){
+        let thisGrade = evals[i].currentGrades[userIndex];
+        
+        thisGrade = thisGrade.split(" ");
+
+        let thisNumberGrade = thisGrade[0];
+        let thisNumberQuestions = thisGrade[1];
+
+        allNumberVals += thisNumberGrade;
+        totalQuestions = thisNumberQuestions;
+    }
+
+
+    let averageGrade = 10*allNumberVals/totalQuestions;
+
+    res.json(averageGrade);
+});
+
+app.get("/api/allCourseGrades", async (req, res) => {
+    // Gets the current course
+    var index = 0;
+    for(let i = 0; i < thisCourses.length; i++){
+        if(thisCourses[i].id == currentCourse){
+            index = i
+        }
+    }
+    
+    let course = thisCourses[index];
+    let evals = []
+    for(let i = 0; i < course.evalIDs.length; i++){
+        let eval = await Evaluation.findOne(
+            {evaluationID: course.evalIDs[i]}
+        );
+        evals.push(eval);
+    };
+
+    let studentGrades = [];
+
+    for(let i = 0; i < course.studentIDs.length; i++){
+        let allNumberVals = 0
+        let totalQuestions = 0
+        for(let j = 0; j < evals.length; j++){
+            let thisGrade = evals[j].currentGrades[i];
+            
+            thisGrade = thisGrade.split(" ");
+    
+            let thisNumberGrade = thisGrade[0];
+            let thisNumberQuestions = thisGrade[1];
+    
+            allNumberVals += thisNumberGrade;
+            totalQuestions = thisNumberQuestions;
+        }
+    
+        let averageGrade = 10*allNumberVals/totalQuestions;
+
+        studentGrades.push(averageGrade);
+    }
+
+    // Could throw in an update to the current course here with the updated grades
+
+    res.json(studentGrades);
+
+});
+
 
 
 // Calls to post the data
+app.post("/api/submitEvaluation", async (req, res) => {
+    
+    console.log(req.body);
+
+    let justifications = req.body.StudentResponse;
+    let groupMember = req.body.groupMember;
+
+    if(typeof groupMember == "string"){
+        groupMember = [groupMember];
+    }
+    
+    // Gets all of the data values entered
+    let values = []
+    for(let i = 0; i < groupMember.length; i++){
+        let forStudent = req.body['numberAnswer-' + i];
+        values.push(forStudent);
+    }
+
+    let thisEval = await Evaluation.findOne(
+        {evaluationID: currentEvaluation}
+    );
+
+    // Gets the current course
+    var index = -1;
+    for(let i = 0; i < thisCourses.length; i++){
+        if(thisCourses[i].id == currentCourse){
+            index = i
+        }
+    }
+    let course = thisCourses[index];
+
+    // Find what index the current user is
+    index = -1;
+    for(let i = 0; i < course.studentIDs.length; i++){
+        if(course.studentIDs[i] == thisUser.userId) index = i;
+    }
+
+    // Add justifications to user
+    thisEval.justifications[index] = justifications;
+
+    // Find indexes of the other groupMembers
+    let indexes = [];
+    for(let i = 0; i < groupMember.length; i++){
+        for(let j = 0; j < course.studentIDs.length; j++){
+            if(groupMember[i] == course.studentIDs[j]) indexes.push(j);
+        }
+    }
+
+    // Update the values for the all group members in order
+    for(let i = 0; i < indexes.length; i++){
+        let lastValue = thisEval.currentGrades[indexes[i]]
+
+        lastValue = lastValue.split(" ");
+
+        let numberGrade = Number(lastValue[0]);
+        let questionNum = Number(lastValue[1]);
+
+        for(let j = 0; j < values[i].length; j++){
+            numberGrade += Number(values[i][j]);
+            questionNum += 1;
+        }
+
+        // Need to update the grade of the user here
+        thisEval.currentGrades[indexes[i]] =  String(numberGrade) + " " + String(questionNum);
+
+        console.log("Updated an Evaluation")
+    }
+
+    console.log("Indexes of same: ", indexes)
+    console.log("This Eva", thisEval.currentGrades);
+
+    result = await Evaluation.updateOne(
+        {evaluationID: thisEval.evaluationID},
+        {$set: {currentGrades: thisEval.currentGrades, justifications: thisEval.justifications}}
+    );
+
+    console.log('Update result:', result);
+    if (result.matchedCount === 0) {
+        console.log('No documents matched the criteria.');
+    } else if (result.modifiedCount === 0) {
+        console.log('Document found, but no changes were made (new data might be identical to existing data).');
+    } else {
+        console.log('Document updated successfully.');
+    }
+    
+    res.redirect('/course');
+});
+
+
 app.post("/api/setCurrentEvaluation", (req, res) => {
     const id = req.body.id;
     currentEvaluation = id;
@@ -217,6 +396,8 @@ app.post("/api/signup", async (req, res) => {
 
         saveInstructor.save();
 
+        thisCourses = [];
+
         thisInstructor = saveInstructor;
     }
     else {
@@ -225,6 +406,8 @@ app.post("/api/signup", async (req, res) => {
             courseId: [],
             groupId: []
         })
+
+        thisCourses = [];
 
         saveStudent.save();
 
@@ -293,11 +476,8 @@ app.post("/api/createcourse", async (req, res) => {
 app.post("/api/removestudent", async (req, res) => {
     email = req.body.email;
 
-    // NEED TO CHANGE HOW THE INSTRUCTOR KNOWS WHAT CLASS IS CURRENTLY SELECTED
-    var thisCourse = thisInstructor.courseID[0];
-    // would not need to do this, instead would just have to update one
+    var thisCourse = currentCourse;
     
-
     // Removes the course from the student
     removeStudent = await Student.findOne(
         {userId: email}
@@ -322,35 +502,43 @@ app.post("/api/removestudent", async (req, res) => {
 
     await Student.updateOne(
         {userId: email},
-        {$set: {courseID: removeStudent.courseID, groupID: removeStudent.groupID}}
+        {$set: {courseID: thisStudent.courseID, groupID: thisStudent.groupID}}
     )
 
     // Removes the student from the course
-    removeStudent = await Course.findOne(
+    thisCourse = await Course.findOne(
         {id: thisCourse}    
     );
 
-
-    for(var i = 0; i < removeStudent.studentIDs.length; i++){
-        if(removeStudent.studentIDs[i] == email){
+    for(var i = 0; i < thisCourse.studentIDs.length; i++){
+        if(thisCourse.studentIDs[i] == email){
             removeGroup = i;
         }
     }
-    removeStudent.studentIDs = removeStudent.studentIDs.filter(id => id != email);
-    removeStudent.groupIDs.splice(removeGroup, 1);
-    removeStudent.grades.splice(removeGroup, 1);
+
+    // Index student is located at in the course
+    let removeIndex = 0;
+    for(var i = 0; i < thisCourse.studentIDs.length; i++){
+        if(thisCourse.studentIDs[i] == email){
+            removeIndex = i;
+        }
+    }
+
+    thisCourse.studentIDs = thisCourse.studentIDs.filter(id => id != email);
+    thisCourse.groupIDs.splice(removeIndex, 1);
+    thisCourse.grades.splice(removeIndex, 1);
 
     // update thisCourses api
     for(var i = 0; i < thisCourses.length; i++){
-        if(thisCourses[i].id == thisCourse) {
-            thisCourses[i] = removeStudent;
+        if(thisCourses[i].id == thisCourse.id) {
+            thisCourses[i] = thisCourse;
         }
     }
 
     // Update the course on the db
     await Course.updateOne(
-        {id: thisCourse},
-        {$set: {studentIDs: removeStudent.studentIDs, groupIDs: removeStudent.groupIDs, grades: removeStudent.grades}}
+        {id: thisCourse.id},
+        {$set: {studentIDs: thisCourse.studentIDs, groupIDs: thisCourse.groupIDs, grades: thisCourse.grades}}
     );
 
     res.redirect("/managestudents")
@@ -361,10 +549,7 @@ app.post("/api/addstudent", async (req, res) => {
     email = req.body.email;
     group = req.body.group;
 
-    // NEED TO CHANGE HOW THE INSTRUCTOR KNOWS WHAT CLASS IS CURRENTLY SELECTED
-    var thisCourse = thisInstructor.courseID[0];
-     // Would also have this Course Variable to represent current values
-    // would not need to do this, instead would just have to update one
+    var thisCourse = currentCourse;
 
     // Updates the student to reflect being added to the change
     addedStudent = await Student.findOne(
@@ -396,27 +581,27 @@ app.post("/api/addstudent", async (req, res) => {
 
 
     // would not need to do this, instead would just have to update one
-    currentCourse = await Course.findOne(
+    thisCourse = await Course.findOne(
         {id: thisCourse}
     )
 
-    currentCourse.studentIDs.push(email);
+    thisCourse.studentIDs.push(email);
 
     const numberGroup = parseInt(group.replace('Group ', ''), 10);
 
-    currentCourse.groupIDs.push(numberGroup);
-    currentCourse.grades.push(100);
+    thisCourse.groupIDs.push(numberGroup);
+    thisCourse.grades.push("0 0");
 
     result = await Course.updateOne(
-        {id: thisCourse},
-        {$set: {studentIDs: currentCourse.studentIDs, groupIDs: currentCourse.groupIDs, grades: currentCourse.grades}}
+        {id: thisCourse.id},
+        {$set: {studentIDs: thisCourse.studentIDs, groupIDs: thisCourse.groupIDs, grades: thisCourse.grades}}
     );
 
 
     // update thisCourses api
     for(var i = 0; i < thisCourses.length; i++){
-        if(thisCourses[i].id == thisCourse) {
-            thisCourses[i] = currentCourse;
+        if(thisCourses[i].id == thisCourse.id) {
+            thisCourses[i] = thisCourse;
         }
     }
 
@@ -437,10 +622,7 @@ app.post("/api/editstudent", async (req, res) => {
     email = req.body.email;
     group = req.body.group;
 
-    // NEED TO CHANGE HOW THE INSTRUCTOR KNOWS WHAT CLASS IS CURRENTLY SELECTED
-    var thisCourse = thisInstructor.courseID[0];
-     // Would also have this Course Variable to represent current values
-    // would not need to do this, instead would just have to update one
+    var thisCourse = currentCourse;
 
     // Updates the student to reflect being added to the change
     addedStudent = await Student.findOne(
@@ -475,27 +657,37 @@ app.post("/api/editstudent", async (req, res) => {
     )
 
     // would not need to do this, instead would just have to update one
-    currentCourse = await Course.findOne(
+    thisCourse = await Course.findOne(
         {id: thisCourse}
     )
 
-    for(var i = 0; i < currentCourse.studentIDs.length; i++){
-        if(currentCourse.studentIDs[i] == email) {
-            const numberGroup = parseInt(group.replace('Group ', ''), 10);
-            currentCourse.groupIDs[i] = numberGroup;
+
+    console.log(thisCourse.studentIDs, email);
+
+    for(let i = 0; i < thisCourse.studentIDs.length; i++){
+        if(thisCourse.studentIDs[i] == email) {
+
+            console.log(group);
+
+            const numberGroup = parseInt(group.replace('Group ', ''));
+
+            console.log(numberGroup);
+
+            thisCourse.groupIDs[i] = numberGroup;
+            console.log("Updated Group IDs")
             break;
         }
     }
 
     result = await Course.updateOne(
-        {id: thisCourse},
-        {$set: {groupIDs: currentCourse.groupIDs}}
+        {id: thisCourse.id},
+        {$set: {groupIDs: thisCourse.groupIDs}}
     );
 
     // update thisCourses api
     for(var i = 0; i < thisCourses.length; i++){
-        if(thisCourses[i].id == thisCourse) {
-            thisCourses[i] = currentCourse;
+        if(thisCourses[i].id == thisCourse.id) {
+            thisCourses[i] = thisCourse;
         }
     }
 
@@ -530,16 +722,19 @@ app.post("/api/createEvaluation", async (req, res) => {
 
     course = thisCourses[index];
 
+    justifications = []
     for(student in course.studentIDs){
         studentGrades.push("0 0")
+        justifications.push([])
     }
 
     // Saved evaluation
     let save = new Evaluation({
-        courseID: currentCourse.id,
+        courseID: currentCourse,
         evaluationID: newEvalID,
         questions: currentQuestions,
         currentGrades: studentGrades,
+        justifications: justifications,
         dueDate: dueDate,
         title: title,
         description: description

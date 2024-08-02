@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 // The "answer evaluation" box on the student course page
-function StudentEvaluation(props){
+function InstructorEvaluationBox(props){
     const navigate = useNavigate();
 
     //props data fields
@@ -44,23 +44,12 @@ function StudentEvaluation(props){
                 </div>
             </div>
             
-            {props.clickable ? 
-            
             <div class="col-sm-2" style={{backgroundColor: grayBlue, borderLeft: "1px solid black", padding:"0px"}}>
                     <button onClick={handleClickThrough} className="btn btn-primary h-100 w-100" style={{backgroundColor: grayBlue, border: "0px solid red", borderTopLeftRadius: "5px", borderBottomLeftRadius: "0px"}}>
                         <i className="fas fa-arrow-right fa-2x" style={{color: "black"}}></i>
                     </button>
             </div>
-                
-                :
 
-            <div class="col-sm-2" style={{backgroundColor: grayBlue, borderLeft: "1px solid black", padding:"0px"}}>
-                <button className="btn btn-primary h-100 w-100" style={{backgroundColor: grayBlue, border: "0px solid red", borderTopLeftRadius: "5px", borderBottomLeftRadius: "0px"}}>
-                    <i className="fas fa-check fa-2x" style={{color: "black"}}></i>
-                </button>
-            </div>
-            
-            }
 
 
         </div>
@@ -68,4 +57,4 @@ function StudentEvaluation(props){
     );
 }
 
-export default StudentEvaluation;
+export default InstructorEvaluationBox;

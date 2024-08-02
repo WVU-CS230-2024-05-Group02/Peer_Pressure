@@ -15,6 +15,7 @@ import CreateClassPage from "./pages/CreateClassPage";
 import HomePage from "./pages/HomePage";
 import QuestionsPage from "./pages/QuestionsPage";
 import AlertStoragePage from "./pages/AlertStoragePage";
+import ViewEvaluations from './pages/ViewEvaluationsPage';
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <Route path="/home" element={<GenericPage><HomePage/></GenericPage>} />
                     <Route path="/createevaluation" element={<GenericPage><QuestionsPage /></GenericPage>} />
                     <Route path="/alert" element={<GenericPage><AlertStoragePage /></GenericPage>}/> {/* Add AlertStoragePage route */}
+                    <Route path="/viewevaluations" element={<ViewEvaluations/>}/>
                 </Routes>
             </Router>
             <ToastContainer /> {/* Render ToastContainer for notifications */}

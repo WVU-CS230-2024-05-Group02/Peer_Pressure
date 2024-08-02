@@ -10,7 +10,7 @@ const courseSchema = new mongoose.Schema({
         type: Number,
     }],
     grades: [{
-        type: Number,
+        type: String,
     }],
     evalIDs: [{
         type: String,

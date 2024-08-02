@@ -3,6 +3,7 @@ import StudentEvaluation from '../components/StudentEvaluationBox';
 import StudentCourseTitleBar from '../components/StudentCourseTitleBar';
 import StudentCourseRightInfoBox from '../components/StudentCourseRightInfoBox';
 import StudentCourseRightButton from '../components/StudentCourseRightButton';
+import InstructorEvaluationBox from '../components/InstructorEvaluationBox';
 
 function StudentCourse(){
 
@@ -17,6 +18,12 @@ function StudentCourse(){
     const [student, setStudent] = useState(null);
     const [course, setCourse] = useState(null);
     const [evals, setEvaluations] = useState(null);
+
+    const [grade, setGrade] = useState(null);
+    const [loadingGrade, setLoadingGrade] = useState(true);
+
+    const [studentGrades, setAllGrades] = useState(null);
+    const [loadingAllGrades, setLoadingAllGrades] = useState(true);
 
     const [loadingCourse, setLoadingCourse] = useState(true);
     const [loadingInstructor, setLoadingInstructor] = useState(true);
@@ -88,12 +95,40 @@ function StudentCourse(){
                 setLoadingUser(false);
             }
         }
+
+        const fetchGrade = async() => {
+            try {
+                const response = await fetch("/api/currentGrade");
+                const data = await response.json();
+
+                setGrade(data);
+            } catch (err) {
+                
+            } finally {
+                setLoadingGrade(false);
+            }
+        }
+
+        const fetchAllGrades = async() => {
+            try {
+                const response = await fetch("/api/allCourseGrades");
+                const data = await response.json();
+
+                setAllGrades(data);
+            } catch (err) {
+                
+            } finally {
+                setLoadingAllGrades(false);
+            }
+        }
         
         fetchUser();
         fetchCourses();
         fetchInstructor();
         fetchStudent();
         fetchEvals();
+        fetchGrade();
+        fetchAllGrades();
 
     }, []);
 
@@ -103,7 +138,7 @@ function StudentCourse(){
         return (
             <div>Loading Course Content...</div>
         );
-    } else if (loadingStudent || loadingInstructor || loadingUser) {
+    } else if (loadingStudent || loadingInstructor || loadingUser || loadingGrade || loadingAllGrades) {
         return (
             <div>Loading User Data...</div>
         );
@@ -121,7 +156,7 @@ function StudentCourse(){
         var sID = student.userId;
 
         // This students group number
-        let index = 0;
+        let index = -1;
         for(let i = 0; i < course.studentIDs.length; i++){
             if(course.studentIDs[i] == sID) index = i;
         }
@@ -138,10 +173,9 @@ function StudentCourse(){
         // Gettting student in group names 
         let studentsInGroup = []
 
-        for(var each in indexes){
-            studentsInGroup.push(course.studentIDs[each]);
+        for(let i = 0; i < indexes.length; i++){
+            studentsInGroup.push(course.studentIDs[indexes[i]])
         }
-
 
         return (
             <StudentCourseRightInfoBox 
@@ -156,7 +190,7 @@ function StudentCourse(){
         if(user.isInstructor) return;
 
         return (
-            <StudentCourseRightInfoBox leftHeader={"Grades"} rightHeader={"Overall Grade: 85"} infoInside={["Evaluation Title - 50%", "Evaluation Title - 75%"]}/>
+            <StudentCourseRightInfoBox leftHeader={"Grades"} rightHeader={"Overall Grade: " + grade}/>
         )
     }
 
@@ -164,16 +198,21 @@ function StudentCourse(){
         if(!user.isInstructor) return;
 
         let student = course.studentIDs;
-        let grade = course.grades;
         let groups = course.groupIDs;
 
         let combined = []
 
         console.log("Student length: ",student.length)
 
-        for(let i = 0; i < student.length; i++){
-            combined.push("Student: " + student[i] + " - Group: " + groups[i] + " - Grade: " + grade[i]);
+        for(let i = 0; i < studentGrades.length; i++){
+            if(studentGrades[i] == null) studentGrades[i] = "N/A"
         }
+
+        for(let i = 0; i < student.length; i++){
+            combined.push("Student: " + student[i] + " - Group: " + groups[i] + " - Grade: " + studentGrades[i]);
+        }
+
+        // Get all of the grades for the students
 
         
         if(combined.length == 0) combined.push("Currently No Students...")
@@ -182,6 +221,7 @@ function StudentCourse(){
             <StudentCourseRightInfoBox leftHeader={"Student Grades"} infoInside={combined}/>
         )
     }
+
 
     const takeToManageStudent = () => {
         if(!user.isInstructor) return;
@@ -199,17 +239,98 @@ function StudentCourse(){
         )
     }
 
-    
-    const showEvaluations = () => {
+    const takeToHomeScreen = () => {
+        return (
+            <StudentCourseRightButton takeTo="Home" leftHeader="Click To Go To Home Page"/>
+
+        )
+    }
+
+
+    const showInstructorEvaluations = () => {
         return (
             <div>
-                {evals.map(evaluation => (
+                <h4 className="text-left" style={{color: "green"}}> <u>View All Evaluations: </u> </h4>
+                
+                {evals.map( (evaluation, i) => (               
                     <div style={{marginBottom: "15px"}}>
-                        <h4 class="text-left" style={{color: "Green"}}> <u>Evaluations: </u> </h4>
-                        <StudentEvaluation id={evaluation.evaluationID} dueDate={evaluation.dueDate} title={evaluation.title} description={evaluation.description}/>
-                    </div> 
+                        <InstructorEvaluationBox id={evaluation.evaluationID} dueDate={evaluation.dueDate} title={evaluation.title} description={evaluation.description}/>
+                    </div>  
                 ))}
             </div>
+
+
+
+        );
+    }
+
+    
+    const showEvaluations = () => {
+
+        if(user.isInstructor) return (
+            <React.Fragment>
+                {showInstructorEvaluations()}
+            </React.Fragment>
+        );
+
+        let index = 0;
+        for(let i = 0; i < course.studentIDs.length; i++){
+            if(course.studentIDs[i] == user.userId) index = i;
+        }
+
+        let none = true;
+
+        let complete= [];
+        for(let i = 0; i < evals.length; i++){
+            if(evals[i].justifications[index].length == 0) {
+                none = false;
+                complete.push(true)
+            }
+            else complete.push(false);
+        }
+
+        return (
+            <div>
+
+                { !none ? 
+                    <h4 class="text-left" style={{color: "Green"}}> <u>Evaluations To Complete: </u> </h4>
+                    :
+                    <div/>
+                }
+
+                {evals.map( (evaluation, i) => (
+
+                    <div>
+
+
+                    {complete[i] == true ? 
+                        <div style={{marginBottom: "15px"}}>
+                            <StudentEvaluation clickable="true" id={evaluation.evaluationID} dueDate={evaluation.dueDate} title={evaluation.title} description={evaluation.description}/>
+                        </div> 
+                        :
+                        <div></div>
+                    }
+
+                    </div>
+                ))}
+
+                <h4 className="text-left" style={{color: "green"}}> <u>Evaluations Previously Completed: </u> </h4>
+                
+                {evals.map( (evaluation, i) => (
+                    <div>
+                    {complete[i] == false ? 
+                        <div style={{marginBottom: "15px"}}>
+                            <StudentEvaluation id={evaluation.evaluationID} dueDate={evaluation.dueDate} title={evaluation.title} description={evaluation.description}/>
+                        </div> 
+                        :
+                        <div></div>
+                    }
+
+                    </div>
+                ))}
+            </div>
+
+
 
         );
     }
@@ -244,6 +365,7 @@ function StudentCourse(){
                 {/*Instructor side bar Show all student grades*/}
                 {takeToManageStudent()}
                 {takeToCreateEvaluation()}
+                {takeToHomeScreen()}
                 {showStudentGrades()}
             </div>
 

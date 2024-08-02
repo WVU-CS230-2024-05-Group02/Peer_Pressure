@@ -22,6 +22,7 @@ function StudentCourseRightButton(props){
     const handleClick = async () => {
         if(props.takeTo == "Manage") navigate('/managestudents');
         // Need to make current questions field equal to [] before sending to this page
+        else if(props.takeTo == "Home") navigate('/home');
         else {
 
             const reponse = await axios.post('/api/addquestion', {delete: true})

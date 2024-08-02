@@ -3,6 +3,7 @@ import HomeCourseBox from '../components/HomeCourseBox';
 import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
+    const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
     const [courses, setCourses] = useState(null);
@@ -48,20 +49,39 @@ function HomePage() {
 
     function showCourseBoxes() {        
         return (
-            <div>
+            <div className="row">
                 {courses.map( course => (
                     <HomeCourseBox
                         title={course.title}
                         description=""
-                        groupNumber="3"
                         evaluation1="Overdue Due Date - Red If Necessary"
                         evaluation2="Not overdue due date"
-                        grade={user.isInstructor ? "" : "Would put in student's grade"}
+                        grade={user.isInstructor ? "" : "Enter Student Grade"}
                         key={course.id}
                         courseID={course.id}
                     />
                 ))}
             </div> 
+        )
+    }
+
+    function takeToMakeNewClass() {
+        if(!user.isInstructor) return;
+
+        const handleClickToNewClass = () => {
+            navigate('/createclass')
+        }
+
+        return (
+            <div className="row">
+                <button onClick={handleClickToNewClass} class="col homepageCourse" style={{textAlign: "left", color: "black", minWidth: "500px", maxWidth: "500px", margin: "10px", borderRadius: "5px" }}>
+                    <div style={{margin: "auto"}}>
+                        <h2 class="col-10 float-left">Create new Class</h2>
+
+                    </div>
+                </button>
+            </div>
+
         )
     }
 
@@ -75,8 +95,9 @@ function HomePage() {
     }
 
     return (
-        <div className="row">
+        <div className="col">
             {showCourseBoxes()}
+            {takeToMakeNewClass()}
         </div>
     );
 }

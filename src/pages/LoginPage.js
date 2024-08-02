@@ -15,9 +15,6 @@ function LoginPage() {
         <h1>Sign In</h1>
         <img className="login-logo" src="/PeerPressureLogo.png" alt="App logo" />
 
-        {/* Temporary link to password recovery page, does not exist yet */}
-        <a href="about:blank">Forgot Password?</a>
-
       <form action="/api/login" method="post">
 
         <label className="email" htmlFor="userEmail" />
@@ -39,9 +36,10 @@ function LoginPage() {
         />
 
         <button className="spaced" type="submit">Login</button>
+        <button className="spaced" onClick={handleSignUp}>Create Account</button>
+
       </form>
 
-      <button className="spaced" onClick={handleSignUp}>Create Account</button>
 
 
         <p>&copy; 2024 Peer Pressure APP. All rights reserved.</p>
