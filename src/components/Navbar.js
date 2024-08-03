@@ -28,7 +28,7 @@ function Navbar() {
     <>
       <nav className="navbar">
         <div className='navbar__container'>
-          <Link to='/' className='navbar__logo' onClick={closeMobileMenu}>
+          <Link to='/home' className='navbar__logo' onClick={closeMobileMenu}>
             <img src="/PeerPressureLogo.png" alt="Peer Pressure Logo" style={{ width: '40px', height: '40px', marginRight: '10px' }} />
             PEER PRESSURE
           </Link>

@@ -17,7 +17,7 @@ mongoose.connect(
     process.env.MONGODB_URI,
 )
 
-PORT = 3000
+const PORT = process.env.PORT || 3000;
 
 // creates the express app
 const app = express();

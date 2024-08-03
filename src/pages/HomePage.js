@@ -91,7 +91,13 @@ function HomePage() {
     }
 
     if(courses == null || courses.length === 0){
-        return <div>No Courses...</div>
+        return (
+            <div>
+                <div>No Courses...</div>
+                {takeToMakeNewClass()}
+            </div>
+        )
+
     }
 
     return (
