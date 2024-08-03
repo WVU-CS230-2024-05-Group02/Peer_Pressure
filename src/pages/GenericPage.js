@@ -5,11 +5,10 @@ import Sidebar from '../components/Sidebar.js';
 import Footer from '../components/Footer.js';
 
 // children: represents any nested components or elements that are passed to GenericPage when it is used
-// d-flex: bootstrap class that applies Flexbox display to the element
-// min-vh-100 =  minimum height of the div to 100% of the viewport height
-// flex-grow-1: bootstrap class that allows the div to grow and take up the remaining space available in the flex container
-// p-3: bootstrap class that applies padding of 3 units to all sides of the div
 
+// The wrapper used to show certain pages in the generic page style
+// An element wrapped in this like: <GenericPage><Element/></GenericPage> will have the common style applied
+// The style adds a navbar-logo linked to home page, side bar-signout button and footer for extra details
 const GenericPage = ({ children }) => {
   return (
     <div className="d-flex flex-column min-vh-100">

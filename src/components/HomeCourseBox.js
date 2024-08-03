@@ -3,50 +3,19 @@ import "../App.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
+// Displayed on the home page
+// Clickable element that traverses the user to the class that this represents
 function HomeCourseBox(props){
     const navigate = useNavigate();
 
     // Props that are passed
-    // title - description - groupNumber - evaluation1, evaluation2, evaluation3 - grade
-    // courseID
-
-    const [grade, setGrade] = useState(null);
-    const [loadingGrade, setLoadingGrade] = useState(true);
-
-    
-    const [user, setUser] = useState(null);
-    const [courses, setCourses] = useState(null);
+    // title - courseID
 
     const [loadingCourse, setLoading] = useState(true);
-    const [loadingUser, setLoadingUser] = useState(true);
 
+    // Gets all of the needed data from the backend using fetch calls to the api
     useEffect(() => {
-        const fetchGrade = async() => {
-            try {
-                const response = await fetch("/api/currentGrade");
-                const data = await response.json();
-
-                setGrade(data);
-            } catch (err) {
-                
-            } finally {
-                setLoadingGrade(false);
-            }
-        }
-
-        const fetchUser = async() => {
-            try{
-                const response = await fetch('/api/user');
-                const data = await response.json();
-                setUser(data);
-            } catch (err) {
-                console.error("Error Fetching User Data: ", err);
-            } finally {
-                setLoadingUser(false);
-            }
-        };
-
+        // Gets the course that this box represents
         const fetchCourses = async() => {
             try {
                 const response = await fetch("/api/courses");
@@ -61,37 +30,20 @@ function HomeCourseBox(props){
         }
         
         fetchCourses();
-        fetchUser();
-
-        fetchGrade();
     })
 
-    if(loadingGrade || loadingUser || loadingCourse) {
+    // If the course is not loaded yet then it can not show the data - return early and say it is loading
+    if(loadingCourse) {
         return (
             <p>Loading Course Data...</p>
         )
     }
 
-    const groupNumber = () => {
-        // Gets the course this is
-        let index = 0;
-        for(let i = 0; i < courses.length; i++){
-            if(courses[i].id == props.courseID) index = i;
-        }
-
-        // Gets the group the user is in
-        let uIndex = 0;
-        for(let i = 0; i < courses[index].studentIDs; i++){
-            if(courses[index].studentIDs[i] == user.userId) uIndex = i;
-        }
-
-        return courses[index].groupIDs[uIndex];
-
-    }
-
+    // Handles the click when this course is pressed
     const handleClick = async () => {
         let courseID = props.courseID;
 
+        // Uploads the course ID that this box represents and sets that to the course that will be displayed on the course page
         try {
             const response = await axios.post('/api/setCurrentCourse', {courseID})
             // Go to new page with props.courseID passed through
@@ -101,31 +53,12 @@ function HomeCourseBox(props){
         }
     }
 
+    // Handles displaying the box
     return (
         <button onClick={handleClick} class="homepageCourse" style={{textAlign: "left", color: "black", minWidth: "500px", maxWidth: "500px", margin: "10px", borderRadius: "5px" }}>
 
             <div class="row" style={{margin: "auto"}}>
                 <h2 class="col-10 float-left">{props.title}</h2>
-                
-
-                {/* {props.grade == "" ? "" 
-                
-                
-                : 
-                
-                <div>
-                    <div class="col-2 float-right">
-                        <h2 style={{textAlign: "center", margin: "auto", border: "1px solid black"}}>{Math.round(grade)}</h2>
-                    </div>
-
-                    <hr style={{border: "1px solid black", margin: "0", marginBottom: "10px"}}/>
-                    <h5>{props.description}</h5>
-
-                    <p style={{marginBottom: "5px"}}>Group Number: {groupNumber()}</p>
-                </div>
-                } */}
-
-
             </div>
         </button>
     );

@@ -17,16 +17,22 @@ import QuestionsPage from "./pages/QuestionsPage";
 import AlertStoragePage from "./pages/AlertStoragePage";
 import ViewEvaluations from './pages/ViewEvaluationsPage';
 
+// router for all of the pages of the app
+// Each url is reflective of the element it is displaying
 function App() {
     return (
         <div className="App">
+            {/* The router element allows the different routes to show different page elements */}
             <Router>
                 <Routes>
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignupPage />} />
+                    {/* Where the user will go to answer the evaluations that the instructor sends */}
                     <Route path="/evaluations" element={<AnswerEvaluation/>} />
+                    {/* The home page for current course for the instructor and student - can view evaluations and grades here */}
                     <Route path="/course" element={<StudentCourse/>} />
+                    {/* For the instructor to manage who all is in the selected course and what group they are in */}
                     <Route path="/managestudents" element={<ManageStudentsPage />} />
                     <Route path="/createclass" element={<GenericPage><CreateClassPage /></GenericPage>} />
                     <Route path="/home" element={<GenericPage><HomePage/></GenericPage>} />
@@ -35,7 +41,6 @@ function App() {
                     <Route path="/viewevaluations" element={<ViewEvaluations/>}/>
                 </Routes>
             </Router>
-            <ToastContainer /> {/* Render ToastContainer for notifications */}
         </div>
     );
 }
